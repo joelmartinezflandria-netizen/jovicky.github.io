@@ -1,11 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
 <title>Vicky ❤️ Joel</title>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0;
         font-family: Arial, sans-serif;
@@ -15,7 +21,8 @@
         background: black;
     }
 
-    /* Fondo estrellas */
+    /* FONDO DE ESTRELLAS */
+
     .stars {
         position: fixed;
         width: 100%;
@@ -23,12 +30,15 @@
         background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
         animation: moveStars 100s linear infinite;
         z-index: -1;
+        pointer-events: none;
     }
 
     @keyframes moveStars {
-        from {background-position: 0 0;}
-        to {background-position: 10000px 5000px;}
+        from { background-position: 0 0; }
+        to { background-position: 10000px 5000px; }
     }
+
+    /* ENCABEZADO */
 
     h1 {
         margin-top: 40px;
@@ -36,41 +46,162 @@
         padding: 0 10px;
     }
 
+    /* CONTADOR */
+
+    .time-section {
+        margin: 35px auto 55px;
+        padding: 0 15px;
+    }
+
+    .time-section h2 {
+        font-size: 25px;
+        margin-bottom: 8px;
+    }
+
+    .since {
+        color: #aaa;
+        font-size: 13px;
+        margin-bottom: 25px;
+    }
+
     #countdown {
-        font-size: 26px;
-        margin: 20px 10px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .time-box {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 12px;
+        padding: 15px 12px;
+        min-width: 85px;
+    }
+
+    .time-box span {
+        display: block;
+        font-size: 27px;
         font-weight: bold;
     }
 
-    input {
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        margin: 5px;
-        width: 250px;
-        max-width: 90%;
+    .time-box small {
+        color: #aaa;
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+
+    .time-message {
+        margin-top: 20px;
+        font-size: 15px;
+        color: #ccc;
+    }
+
+    /* ALBUM SCRAPBOOK */
+
+    .album-section {
+        margin: 50px auto;
+        padding: 0 15px;
+        max-width: 1100px;
+    }
+
+    .album-section h2 {
+        font-size: 30px;
+        margin-bottom: 8px;
+    }
+
+    .album-subtitle {
+        color: #aaa;
+        font-size: 14px;
+        margin-bottom: 35px;
     }
 
     .gallery {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 0 10px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 30px 20px;
+        align-items: center;
     }
 
-    .gallery img {
-        width: 220px;
-        height: 220px;
+    .photo {
+        background: #f5f0e8;
+        padding: 10px 10px 25px;
+        border-radius: 3px;
+        color: #222;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        transition: transform 0.3s ease;
+        cursor: pointer;
+        transform: rotate(var(--rotation));
+        max-width: 100%;
+    }
+
+    .photo:hover {
+        transform: rotate(0deg) scale(1.04);
+        z-index: 2;
+    }
+
+    .photo img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
         object-fit: cover;
-        border-radius: 20px;
-        margin: 10px;
-        box-shadow: 0 10px 25px rgba(255,255,255,0.2);
-        transition: 0.3s;
+        display: block;
+        background: #ddd;
     }
 
-    .gallery img:hover {
-        transform: scale(1.05);
+    .photo-caption {
+        font-family: Georgia, serif;
+        font-size: 14px;
+        margin-top: 13px;
+        min-height: 17px;
     }
+
+    /* VISOR DE FOTOGRAFÍAS */
+
+    .lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.94);
+        z-index: 10;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .lightbox.active {
+        display: flex;
+    }
+
+    .lightbox-content {
+        max-width: 90%;
+        max-height: 85vh;
+        text-align: center;
+    }
+
+    .lightbox img {
+        max-width: 100%;
+        max-height: 75vh;
+        object-fit: contain;
+        border: 8px solid #f5f0e8;
+        box-shadow: 0 10px 40px black;
+    }
+
+    .lightbox p {
+        color: white;
+        margin-top: 15px;
+    }
+
+    .close-lightbox {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 35px;
+        color: white;
+        background: none;
+        padding: 5px 12px;
+    }
+
+    /* BOTONES */
 
     button {
         padding: 12px 20px;
@@ -89,24 +220,67 @@
         transform: scale(1.05);
     }
 
-    /* 📱 Ajustes para celular */
+    /* MÚSICA */
+
+    .music-section {
+        margin: 55px auto 35px;
+    }
+
+    /* PIE */
+
+    footer {
+        color: #777;
+        font-size: 12px;
+        padding: 20px;
+        margin-top: 30px;
+    }
+
+    /* CELULARES */
+
     @media (max-width: 600px) {
 
         h1 {
             font-size: 28px;
         }
 
-        #countdown {
-            font-size: 18px;
+        .time-section h2 {
+            font-size: 21px;
         }
 
-        .gallery img {
-            width: 90%;
-            height: auto;
+        .time-box {
+            min-width: 70px;
+            padding: 12px 8px;
+        }
+
+        .time-box span {
+            font-size: 22px;
+        }
+
+        .gallery {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px 12px;
+        }
+
+        .photo {
+            padding: 7px 7px 18px;
+        }
+
+        .photo-caption {
+            font-size: 12px;
+        }
+
+        .album-section h2 {
+            font-size: 25px;
         }
 
         button {
-            width: 90%;
+            max-width: 90%;
+        }
+    }
+
+    @media (max-width: 350px) {
+        .gallery {
+            grid-template-columns: 1fr;
         }
     }
 
@@ -119,75 +293,243 @@
 
 <h1>Vicky ❤️ Joel</h1>
 
-<h2>Falta para vernos:</h2>
-<div id="countdown"></div>
+<!-- CONTADOR DE TIEMPO JUNTOS -->
 
-<h3>Cambiar fecha</h3>
-<input type="datetime-local" id="newDate">
-<br>
-<button onclick="updateDate()">Actualizar</button>
+<section class="time-section">
 
-<h2>Nosotros</h2>
-<div class="gallery">
-    <img src="0edeb785-e44f-4346-a270-7de6c64dfdbe.jpg">
-    <img src="62f12126-75f0-4a5c-9437-5882c8e83147.jpg">
-    <img src="12afaaee-a01e-410a-bb96-2e598ed312bb.jpg">
-    <img src="ce0e421f-b4bf-4ea1-b33d-ce85f6d3f748.jpg">
-    <img src="71db6e68-01b7-457c-99df-05b95ce288e5.jpg">
-    <img src="b2b07cfe-2e2a-4093-977c-abfee15641ee.jpg">
-    <img src="728d42a6-6852-43e9-8bf9-63f619b3007c.jpg">
-    <img src="5d2f2ffa-b1de-4b3a-863d-5d37493240c5.jpg">
-    <img src="efc55d78-1cdc-4b96-9d79-b5e5c2eaf706.jpg">
+    <h2>Nuestro tiempo juntos ❤️</h2>
+
+    <div class="since">
+        Desde el 26 de marzo de 2026
+    </div>
+
+    <div id="countdown">
+
+        <div class="time-box">
+            <span id="days">0</span>
+            <small>DÍAS</small>
+        </div>
+
+        <div class="time-box">
+            <span id="hours">0</span>
+            <small>HORAS</small>
+        </div>
+
+        <div class="time-box">
+            <span id="minutes">0</span>
+            <small>MINUTOS</small>
+        </div>
+
+        <div class="time-box">
+            <span id="seconds">0</span>
+            <small>SEGUNDOS</small>
+        </div>
+
+    </div>
+
+    <div class="time-message">
+        Y contando... porque quiero que sean muchos más. ❤️
+    </div>
+
+</section>
+
+
+<!-- ÁLBUM DE RECUERDOS -->
+
+<section class="album-section">
+
+    <h2>Nuestros recuerdos 📸</h2>
+
+    <div class="album-subtitle">
+        Pequeños momentos de una historia enorme.
+    </div>
+
+    <div class="gallery" id="gallery">
+
+        <!-- CADA FOTO ES UN RECUERDO INDEPENDIENTE -->
+
+        <div class="photo" style="--rotation: -3deg"
+             onclick="openPhoto(this)">
+            <img src="0edeb785-e44f-4346-a270-7de6c64dfdbe.jpg"
+                 alt="Recuerdo juntos" loading="lazy">
+            <div class="photo-caption">Un recuerdo ❤️</div>
+        </div>
+
+        <div class="photo" style="--rotation: 2deg"
+             onclick="openPhoto(this)">
+            <img src="62f12126-75f0-4a5c-9437-5882c8e83147.jpg"
+                 alt="Recuerdo juntos" loading="lazy">
+            <div class="photo-caption">Mi persona favorita</div>
+        </div>
+
+        <div class="photo" style="--rotation: -2deg"
+             onclick="openPhoto(this)">
+            <img src="12afaaee-a01e-410a-bb96-2e598ed312bb.jpg"
+                 alt="Recuerdo juntos" loading="lazy">
+            <div class="photo-caption">Nosotros</div>
+        </div>
+
+        <div class="photo" style="--rotation: 3deg"
+             onclick="openPhoto(this)">
+            <img src="ce0e421f-b4bf-4ea1-b33d-ce85f6d3f748.jpg"
+                 alt="Recuerdo juntos" loading="lazy">
+            <div class="photo-caption">Un día especial</div>
+        </div>
+
+        <div class="photo" style="--rotation: -2deg"
+             onclick="openPhoto(this)">
+            <img src="71db6e68-01b7-457c-99df-05b95ce288e5.jpg"
+                 alt="Recuerdo juntos" loading="lazy">
+            <div class="photo-caption">Juntos ❤️</div>
+        </div>
+
+        <div class="photo" style="--rotation: 2deg"
+             onclick="openPhoto(this)">
+            <img src="b2b07cfe-2e2a-4093-977c-abfee15641ee.jpg"
+                 alt="Recuerdo juntos" loading="lazy">
+            <div class="photo-caption">Otro recuerdo</div>
+        </div>
+
+        <div class="photo" style="--rotation: -3deg"
+             onclick="openPhoto(this)">
+            <img src="728d42a6-6852-43e9-8bf9-63f619b3007c.jpg"
+                 alt="Recuerdo juntos" loading="lazy">
+            <div class="photo-caption">Mi lugar favorito</div>
+        </div>
+
+        <div class="photo" style="--rotation: 2deg"
+             onclick="openPhoto(this)">
+            <img src="5d2f2ffa-b1de-4b3a-863d-5d37493240c5.jpg"
+                 alt="Recuerdo juntos" loading="lazy">
+            <div class="photo-caption">Un momento más</div>
+        </div>
+
+        <div class="photo" style="--rotation: -2deg"
+             onclick="openPhoto(this)">
+            <img src="efc55d78-1cdc-4b96-9d79-b5e5c2eaf706.jpg"
+                 alt="Recuerdo juntos" loading="lazy">
+            <div class="photo-caption">Siempre nosotros</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- VISOR DE FOTOS -->
+
+<div class="lightbox" id="lightbox" onclick="closePhoto(event)">
+
+    <button class="close-lightbox"
+            onclick="closePhoto(event)"
+            aria-label="Cerrar">&times;</button>
+
+    <div class="lightbox-content">
+        <img id="lightbox-image" src="" alt="Fotografía ampliada">
+        <p id="lightbox-caption"></p>
+    </div>
+
 </div>
 
-<br>
 
-<button onclick="playMusic()">🎵 Reproducir canción</button>
+<!-- MÚSICA -->
 
-<audio id="music" src="worship-or-love.mp3" loop></audio>
+<div class="music-section">
+
+    <button onclick="playMusic()">
+        🎵 Reproducir canción
+    </button>
+
+    <audio id="music" src="worship-or-love.mp3" loop></audio>
+
+</div>
+
+
+<footer>
+    Hecho con amor, para nosotros. ❤️
+</footer>
+
 
 <script>
 
-let nextDate = localStorage.getItem("nextDate");
+/* CONTADOR DESDE EL 26/03/2026 */
 
-if (!nextDate) {
-    nextDate = new Date("2026-03-23T13:30:00").getTime();
-} else {
-    nextDate = parseInt(nextDate);
-}
+const startDate = new Date(2026, 2, 26, 0, 0, 0).getTime();
 
-function updateDate() {
-    let selected = document.getElementById("newDate").value;
-    if (selected) {
-        nextDate = new Date(selected).getTime();
-        localStorage.setItem("nextDate", nextDate);
-    }
-}
+function updateCounter() {
 
-let countdown = setInterval(function() {
-    let now = new Date().getTime();
-    let distance = nextDate - now;
-
-    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById("countdown").innerHTML =
-        days + " días " + hours + " horas " + minutes + " minutos " + seconds + " segundos";
+    const now = new Date().getTime();
+    const distance = now - startDate;
 
     if (distance < 0) {
-        document.getElementById("countdown").innerHTML = "Nos estamos viendo!!❤️";
+        document.getElementById("countdown").innerHTML =
+            "Nuestra historia está por comenzar ❤️";
+        return;
     }
-}, 1000);
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+
+}
+
+updateCounter();
+setInterval(updateCounter, 1000);
+
+
+/* AMPLIAR FOTOGRAFÍAS */
+
+function openPhoto(photo) {
+
+    const image = photo.querySelector("img");
+    const caption = photo.querySelector(".photo-caption");
+
+    document.getElementById("lightbox-image").src = image.src;
+    document.getElementById("lightbox-caption").textContent = caption.textContent;
+
+    document.getElementById("lightbox").classList.add("active");
+
+}
+
+function closePhoto(event) {
+
+    if (
+        event.target.id === "lightbox" ||
+        event.target.classList.contains("close-lightbox")
+    ) {
+        document.getElementById("lightbox").classList.remove("active");
+    }
+
+}
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+        document.getElementById("lightbox").classList.remove("active");
+    }
+
+});
+
+
+/* REPRODUCTOR MUSICAL */
 
 function playMusic() {
-    document.getElementById("music").play();
+
+    const music = document.getElementById("music");
+
+    music.play().catch(function(error) {
+        console.log("No se pudo reproducir la canción:", error);
+    });
+
 }
 
 </script>
 
 </body>
 </html>
-
-
